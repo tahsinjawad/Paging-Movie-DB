@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.darkray.pagingmoviedb.model.Movie" />
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/movies_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="72dp"
+        android:orientation="horizontal"
+        android:background="@color/grey_3"
+        android:padding="5dp">
+
+        <ImageView
+            app:placeHolder="@{@drawable/background}"
+            app:imageUrl="@{movie.posterPath}"
+            app:error="@{@drawable/error}"
+            android:layout_margin="@dimen/spacing_small"
+            android:layout_width="62dp"
+            android:layout_height="100dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:text="@{movie.title}"
+                android:ellipsize="end"
+                android:inputType="none"
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:paddingStart="0dp"
+                android:paddingEnd="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:text="@{movie.releaseDate}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="0dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/colorGreyLight" />
+
+            <TextView
+                android:id="@+id/description"
+                android:text="@{movie.overview}"
+                android:ellipsize="end"
+                android:inputType="none"
+                android:maxLines="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="0dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/colorGreyLight" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/rating_image"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/star"
+                android:tint="@color/yellow_800" />
+
+
+            <TextView
+                android:id="@+id/rating"
+                android:text="@{Double.toString(safeUnbox(movie.voteAverage))}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
