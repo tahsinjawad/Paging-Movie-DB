@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Paging Movie DB</string>
-
     <string name="error">ERROR !! Tap to retry.</string>
+    <string name="image_description">Image Description</string>
 </resources>

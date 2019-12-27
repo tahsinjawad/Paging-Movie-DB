@@ -15,8 +15,7 @@ import com.darkray.pagingmoviedb.repository.AllApi;
 public class ImageBindingAdapter {
 
 
-
-    @BindingAdapter({"imageUrl","placeHolder", "error"})
+    @BindingAdapter({"imageUrl", "placeHolder", "error"})
     public static void loadImage(ImageView view, String url, Drawable placeHolder, Drawable error) {
         RequestOptions options = new RequestOptions()
                 .transforms(new RoundedCorners(10))
@@ -25,7 +24,7 @@ public class ImageBindingAdapter {
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .priority(Priority.HIGH);
 
-        Glide.with(view.getContext()).load(AllApi.IMAGE_BASE_URL+url).apply(options).into(view);
+        Glide.with(view.getContext()).load(AllApi.IMAGE_BASE_URL + url).apply(options).into(view);
 
     }
 

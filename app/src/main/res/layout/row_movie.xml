@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="movie"
             type="com.darkray.pagingmoviedb.model.Movie" />
@@ -14,19 +15,20 @@
         android:id="@+id/movies_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/grey_3"
         android:gravity="center_vertical"
         android:minHeight="72dp"
         android:orientation="horizontal"
-        android:background="@color/grey_3"
         android:padding="5dp">
 
         <ImageView
-            app:placeHolder="@{@drawable/background}"
-            app:imageUrl="@{movie.posterPath}"
-            app:error="@{@drawable/error}"
-            android:layout_margin="@dimen/spacing_small"
             android:layout_width="62dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/spacing_small"
+            android:contentDescription="@string/image_description"
+            app:error="@{@drawable/error}"
+            app:imageUrl="@{movie.posterPath}"
+            app:placeHolder="@{@drawable/background}" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -36,39 +38,39 @@
 
             <TextView
                 android:id="@+id/title"
-                android:text="@{movie.title}"
-                android:ellipsize="end"
-                android:inputType="none"
-                android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
+                android:ellipsize="end"
+                android:inputType="none"
+                android:maxLines="1"
                 android:paddingStart="0dp"
                 android:paddingEnd="16dp"
-                android:textStyle="bold"
+                android:text="@{movie.title}"
                 android:textColor="@color/colorBlack"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/subtitle"
-                android:text="@{movie.releaseDate}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="0dp"
                 android:paddingEnd="16dp"
+                android:text="@{movie.releaseDate}"
                 android:textColor="@color/colorGreyLight" />
 
             <TextView
                 android:id="@+id/description"
-                android:text="@{movie.overview}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:inputType="none"
                 android:maxLines="2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:paddingStart="0dp"
                 android:paddingEnd="16dp"
+                android:text="@{movie.overview}"
                 android:textColor="@color/colorGreyLight" />
 
         </LinearLayout>
@@ -82,6 +84,7 @@
                 android:id="@+id/rating_image"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+                android:contentDescription="@string/image_description"
                 android:scaleType="centerCrop"
                 android:src="@drawable/star"
                 android:tint="@color/yellow_800" />
@@ -89,10 +92,10 @@
 
             <TextView
                 android:id="@+id/rating"
-                android:text="@{Double.toString(safeUnbox(movie.voteAverage))}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="8dp"
+                android:text="@{Double.toString(safeUnbox(movie.voteAverage))}" />
         </LinearLayout>
 
     </LinearLayout>

@@ -8,40 +8,52 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        resConfigs "en"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     dataBinding {
         enabled = true
     }
+
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    configurations {
+        //all*.exclude module: 'fragment'
+        //all*.exclude module: 'vectordrawable'
+        all*.exclude module: 'customview'
+    }
+
 }
 
 dependencies {
     def paging_version = "1.0.1"
-    def lifecycle_version = "2.0.0"
-    def recyclerView_version = "1.1.0-beta01"
-    def material_version = "1.1.0-alpha08"
+    def lifecycle_version = "2.1.0"
+    def recyclerView_version = "1.2.0-alpha01"
     def retrofit_version = "2.4.0"
     def glide_version = "4.3.1"
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
 
     implementation "androidx.recyclerview:recyclerview:$recyclerView_version"
-    implementation "com.google.android.material:material:$material_version"
 
     //paging
     implementation "android.arch.paging:runtime:$paging_version"

@@ -12,7 +12,7 @@
             type="com.darkray.pagingmoviedb.enums.State" />
         <variable
             name="viewModel"
-            type="com.darkray.pagingmoviedb.viewmodel.MainActivityViewModel" />
+            type="com.darkray.pagingmoviedb.ui.activity.mainActivity.MainViewModel" />
 
     </data>
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/grey_200"
-        tools:context=".ui.activity.MainActivity">
+        tools:context=".ui.activity.mainActivity.MainActivity">
 
 
         <ProgressBar
@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            app:setAdapter="@{viewModel.adapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:reverseLayout="false"
             app:itemDecorationVertical="@{R.dimen.spacing_xsmall}"

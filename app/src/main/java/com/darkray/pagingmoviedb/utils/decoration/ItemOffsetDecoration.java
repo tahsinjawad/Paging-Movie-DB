@@ -10,44 +10,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
 
-   private int mItemOffset;
+    private final int mItemOffset;
 
-   private int top;
-   private int bottom;
-   private int left;
-   private int right;
-
-   public ItemOffsetDecoration(int itemOffset) {
-       mItemOffset = itemOffset;
-   }
+    private ItemOffsetDecoration(int itemOffset) {
+        mItemOffset = itemOffset;
+    }
 
 
+    public ItemOffsetDecoration(@NonNull Context context, @DimenRes int itemOffsetId) {
+        this(context.getResources().getDimensionPixelSize(itemOffsetId));
+    }
 
-   public ItemOffsetDecoration(@NonNull Context context, @DimenRes int itemOffsetId) {
-       this(context.getResources().getDimensionPixelSize(itemOffsetId));
-   }
+    @Override
 
-   @Override
+    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
 
-   public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        super.getItemOffsets(outRect, view, parent, state);
 
-       super.getItemOffsets(outRect, view, parent, state);
+        int left = mItemOffset;
+        int right = mItemOffset;
+        int top = (mItemOffset / 2);
+        int bottom = mItemOffset / 2;
 
-       left = mItemOffset;
-       right = mItemOffset;
-       top = (mItemOffset/2);
-       bottom = mItemOffset/2;
+        if (parent.getChildAdapterPosition(view) == 0) {
+            top = mItemOffset;
+        } else if (parent.getChildAdapterPosition(view) == state.getItemCount() - 1) {
+            bottom = mItemOffset;
+        }
 
-       if(parent.getChildAdapterPosition(view) == 0){
-           top = mItemOffset;
-       }
+        outRect.set(left, top, right, bottom);
 
-       else if(parent.getChildAdapterPosition(view) == state.getItemCount()-1){
-           bottom = mItemOffset;
-       }
-
-       outRect.set(left, top, right, bottom);
-
-   }
+    }
 
 }

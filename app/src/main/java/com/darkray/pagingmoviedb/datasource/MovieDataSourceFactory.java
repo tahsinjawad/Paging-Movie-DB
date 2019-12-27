@@ -7,7 +7,7 @@ import com.darkray.pagingmoviedb.model.Movie;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MovieDataSourceFactory extends DataSource.Factory<Integer, Movie>{
+public class MovieDataSourceFactory extends DataSource.Factory<Integer, Movie> {
 
     private CompositeDisposable compositeDisposable;
     private MutableLiveData<MovieDataSource> movieDataSourceMutableLiveData = new MutableLiveData<>();

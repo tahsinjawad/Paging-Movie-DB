@@ -21,8 +21,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
-    private static final String TAG = "MovieDataSource";
     public static final int PAGE_SIZE = 20;
+    private static final String TAG = "MovieDataSource";
     private static final int FIRST_PAGE = 1;
 
     private CompositeDisposable compositeDisposable;
@@ -43,22 +43,22 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(new DisposableSingleObserver<MovieResponse>() {
-                    @Override
-                    public void onSuccess(MovieResponse movieResponse) {
-                        if(movieResponse != null){
-                            Log.d(TAG, "onSuccess: "+movieResponse.getMovies().size());
-                            updateState(State.DONE);
-                            callback.onResult(movieResponse.getMovies(), null, FIRST_PAGE+1);
-                        }
-                    }
+                            @Override
+                            public void onSuccess(MovieResponse movieResponse) {
+                                if (movieResponse != null) {
+                                    Log.d(TAG, "onSuccess: " + movieResponse.movies.size());
+                                    updateState(State.DONE);
+                                    callback.onResult(movieResponse.movies, null, FIRST_PAGE + 1);
+                                }
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "onError: "+e.getMessage());
-                        updateState(State.ERROR);
-                        setRetry(() -> loadInitial(params, callback));
-                    }
-                }));
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d(TAG, "onError: " + e.getMessage());
+                                updateState(State.ERROR);
+                                setRetry(() -> loadInitial(params, callback));
+                            }
+                        }));
     }
 
     @Override
@@ -67,26 +67,26 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
 
         compositeDisposable.add(
                 RetrofitClient.getInterface().getTopRatedMovies(params.key, AllApi.API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<MovieResponse>() {
-                    @Override
-                    public void onSuccess(MovieResponse movieResponse) {
-                        if(movieResponse != null){
-                            Log.d(TAG, "onSuccess: "+movieResponse.getMovies().size());
-                            updateState(State.DONE);
-                            Integer adjacentKey = (params.key > 1) ? params.key - 1 : null;
-                            callback.onResult(movieResponse.getMovies(), adjacentKey);
-                        }
-                    }
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<MovieResponse>() {
+                            @Override
+                            public void onSuccess(MovieResponse movieResponse) {
+                                if (movieResponse != null) {
+                                    Log.d(TAG, "onSuccess: " + movieResponse.movies.size());
+                                    updateState(State.DONE);
+                                    Integer adjacentKey = (params.key > 1) ? params.key - 1 : null;
+                                    callback.onResult(movieResponse.movies, adjacentKey);
+                                }
+                            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "onError: "+e.getMessage());
-                        updateState(State.ERROR);
-                        setRetry(() -> loadBefore(params, callback));
-                    }
-                }));
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d(TAG, "onError: " + e.getMessage());
+                                updateState(State.ERROR);
+                                setRetry(() -> loadBefore(params, callback));
+                            }
+                        }));
     }
 
     @Override
@@ -100,29 +100,29 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
                         .subscribeWith(new DisposableSingleObserver<MovieResponse>() {
                             @Override
                             public void onSuccess(MovieResponse movieResponse) {
-                                if(movieResponse != null){
-                                    Log.d(TAG, "onSuccess: "+movieResponse.getMovies().size());
+                                if (movieResponse != null) {
+                                    Log.d(TAG, "onSuccess: " + movieResponse.movies.size());
                                     updateState(State.DONE);
-                                    Integer key = movieResponse.getMovies().size()>0 ? params.key + 1 : null;
-                                    callback.onResult(movieResponse.getMovies(), key);
+                                    Integer key = movieResponse.movies.size() > 0 ? params.key + 1 : null;
+                                    callback.onResult(movieResponse.movies, key);
                                 }
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                Log.d(TAG, "onError: "+e.getMessage());
+                                Log.d(TAG, "onError: " + e.getMessage());
                                 updateState(State.ERROR);
                                 setRetry(() -> loadAfter(params, callback));
                             }
                         }));
     }
 
-    private void updateState(State state){
+    private void updateState(State state) {
         this.stateMutableLiveData.postValue(state);
     }
 
-    public void retry(){
-        if(retryCompletable != null){
+    public void retry() {
+        if (retryCompletable != null) {
             compositeDisposable.add(retryCompletable
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -130,7 +130,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
         }
     }
 
-    private void setRetry(Action action){
+    private void setRetry(Action action) {
         retryCompletable = action == null ? null : Completable.fromAction(action);
     }
 

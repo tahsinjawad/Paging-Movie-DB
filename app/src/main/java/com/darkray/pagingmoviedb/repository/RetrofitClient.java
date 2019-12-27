@@ -12,7 +12,7 @@ public class RetrofitClient {
     private static Retrofit retrofit = null;
 
     private static Retrofit getClient() {
-        if (retrofit==null) {
+        if (retrofit == null) {
 
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
                     .readTimeout(60, TimeUnit.SECONDS)
